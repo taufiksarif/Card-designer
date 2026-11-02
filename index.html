@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Card Studio</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="font-editor.css">
+  <link rel="stylesheet" href="arrange-bar.css?v=2">
+  <link rel="stylesheet" href="zoom-slider.css">
+  <link rel="stylesheet" href="polish.css?v=1">
+  <link rel="stylesheet" href="template-modal.css">
+  <link rel="stylesheet" href="card-size.css">
+  <style>@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style>
+  <style>.copies-control{display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center;padding:12px;border:1px solid #e6ede9;border-radius:9px;margin-top:15px;background:#fbfdfc}.copies-control>label{grid-column:1}.copies-control>label small,.copies-override{display:block;font-size:9px;color:#929d98;margin-top:4px}.copies-input{grid-column:2;grid-row:1;display:flex;align-items:center;border:1px solid #e3eae6;border-radius:7px;background:#fff;height:32px}.copies-input button{border:0;background:transparent;width:28px;height:30px;color:#187d75}.copies-input input{width:37px;text-align:center;border:0;outline:0;font-weight:700;font-size:11px;color:#354541;-moz-appearance:textfield}.copies-input input::-webkit-inner-spin-button,.copies-input input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.copies-override{grid-column:1/-1;margin:0}.copies-override code{color:#187d75;background:#eff8f4;border-radius:4px;padding:2px 4px}</style>
+  <style>.id-icon{font:700 11px Manrope,sans-serif;letter-spacing:-.6px;color:#617f9b}</style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">C</span><span>card<span class="brand-light">studio</span><small>DESIGN · PERSONALIZE · PRINT</small></span></a>
+    <div class="doc-name"><span class="live-dot"></span><input id="projectName" value="Untitled card" aria-label="Project name"><span class="saved">Saved locally</span></div>
+    <div class="top-actions"><button class="btn quiet" id="openProject">Open</button><button class="btn quiet" id="saveProject">Save project</button><button class="btn quiet" id="saveTemplate">Save as template</button><button class="btn primary" id="printBtn"><span>▣</span> Print cards</button></div>
+  </header>
+  <main class="app-shell">
+    <aside class="left-panel">
+      <div class="panel-heading"><div><span class="eyebrow">YOUR PROJECT</span><h2>Card setup</h2></div><button class="icon-btn" id="newProject" title="New project">＋</button></div>
+      <section class="setup-section">
+        <label class="field-label">Card size</label>
+        <label class="preset-label">Preset size<select id="cardSizePreset"><option value="custom">Custom dimensions</option><option value="cr80">CR80 / ID-1 · 85.6 × 54 mm</option><option value="cr79">CR79 · 83.9 × 51 mm</option><option value="cr100">CR100 · 98.5 × 67 mm</option><option value="id2">ISO ID-2 · 105 × 74 mm</option><option value="id3">ISO ID-3 · 125 × 88 mm</option></select></label>
+        <div class="size-fields"><label><span>Width</span><div><input id="cardWidth" type="number" value="85.6" step="0.1"><em>mm</em></div></label><label><span>Height</span><div><input id="cardHeight" type="number" value="54" step="0.1"><em>mm</em></div></label></div>
+        <div class="orientation-row"><span class="field-label">Orientation</span><div class="orientation-switch"><button type="button" data-orientation="landscape" class="active">Landscape</button><button type="button" data-orientation="portrait">Portrait</button></div></div>
+        <div class="size-note"><span class="check">✓</span> <span id="presetNote">CR80 · Standard ID card</span></div>
+        <label class="background-fit-row">Background image<select id="backgroundFit"><option value="cover">Fill card · crop edges</option><option value="contain">Fit image · show all</option></select><small>Image proportions stay intact; the original resolution is kept for printing.</small></label>
+      </section>
+      <section class="setup-section faces-section">
+        <div class="section-title"><label class="field-label">Design sides</label><span class="muted">2 sides</span></div>
+        <div class="face-switch"><button class="face-tab active" data-face="front"><span class="face-icon">▱</span><span>Front</span></button><button class="face-tab" data-face="back"><span class="face-icon back-icon">▱</span><span>Back</span></button></div>
+      </section>
+      <section class="setup-section elements-section">
+        <div class="section-title"><label class="field-label">Add to card</label><span class="muted">Click to add</span></div>
+        <div class="tool-grid">
+          <button class="tool" data-add="text"><span class="tool-icon text-icon">T</span><span>Text</span></button>
+          <button class="tool" data-add="image"><span class="tool-icon image-icon">▧</span><span>Image</span></button>
+          <button class="tool" data-add="qr"><span class="tool-icon qr-icon">▦</span><span>QR code</span></button>
+          <button class="tool" data-add="number"><span class="tool-icon num-icon">#</span><span>Card no.</span></button>
+          <button class="tool" data-add="idno"><span class="tool-icon id-icon">ID</span><span>ID no.</span></button>
+          <button class="tool" data-add="shape"><span class="tool-icon shape-icon">◩</span><span>Shape</span></button>
+          <button class="tool" id="addBackground"><span class="tool-icon bg-icon">▤</span><span>Background</span></button>
+        </div>
+        <div class="layer-head"><label class="field-label">Layers</label><span id="layerCount" class="muted">0</span></div>
+        <div id="layers" class="layers"></div>
+      </section>
+      <div class="left-footer"><span class="status-led"></span> Autosaved in this browser</div>
+    </aside>
+    <section class="workspace">
+      <div class="workspace-top"><div><div class="crumb">DESIGNER <span>/</span> <b id="sideLabel">FRONT</b></div><h1>Card designer<span class="period">.</span></h1><p>Design both sides, then personalize every copy for print.</p></div><div class="zoom-control"><button id="zoomOut" aria-label="Zoom out">−</button><span id="zoomValue">100%</span><input id="zoomSlider" type="range" min="50" max="150" step="5" value="100" aria-label="Canvas zoom"><button id="zoomIn" aria-label="Zoom in">＋</button></div></div>
+      <div class="arrange-bar">
+        <div class="arrange-row arrange-actions">
+          <div class="shape-menu-wrap"><button type="button" id="shapeMenuToggle" class="arrange-menu-button">Insert shape <span>▾</span></button><div id="shapeGallery" class="shape-gallery hidden"><button data-shape-kind="rect" title="Rectangle">□</button><button data-shape-kind="roundRect" title="Rounded rectangle">▢</button><button data-shape-kind="ellipse" title="Ellipse">○</button><button data-shape-kind="triangle" title="Triangle">△</button><button data-shape-kind="diamond" title="Diamond">◇</button><button data-shape-kind="pentagon" title="Pentagon">⬠</button><button data-shape-kind="hexagon" title="Hexagon">⬡</button><button data-shape-kind="star" title="Star">☆</button></div></div>
+          <div class="arrange-divider"></div><label class="fill-control" title="Shape fill"><span>Fill</span><input id="arrangeFill" type="color" value="#dff0e9" disabled></label>
+          <label class="align-control"><span>Align to card</span><select id="objectAlign" disabled><option value="">Choose…</option><option value="left">Left</option><option value="center">Center horizontally</option><option value="right">Right</option><option value="top">Top</option><option value="middle">Middle vertically</option><option value="bottom">Bottom</option></select></label>
+          <div class="arrange-divider"></div><label class="measure-field"><span>Angle</span><input id="objectAngle" type="number" value="0" step="1" disabled>°</label>
+        </div>
+        <div class="arrange-row arrange-measures"><span class="arrange-row-title">Size &amp; position</span>
+          <label class="measure-field"><span>Width</span><input id="objectWidth" type="number" min="0.1" step="0.1" disabled><em>cm</em></label><label class="measure-field"><span>Height</span><input id="objectHeight" type="number" min="0.1" step="0.1" disabled><em>cm</em></label>
+          <div class="arrange-divider"></div><label class="measure-field"><span>Left</span><input id="objectLeft" type="number" min="0" step="0.1" disabled><em>cm</em></label><label class="measure-field"><span>Top</span><input id="objectTop" type="number" min="0" step="0.1" disabled><em>cm</em></label>
+        </div>
+      </div>
+      <div class="canvas-stage"><div class="card-wrap"><div id="cardCanvas" class="card-canvas" tabindex="0" aria-label="Card design canvas"></div></div><div class="canvas-tip"><span class="mouse-icon">⌖</span> Select an element to edit · Drag to move</div></div>
+      <div class="canvas-bottom"><div class="canvas-size"><span class="ruler-icon">▱</span><span id="dimensionLabel">85.6 × 54 mm</span></div><div class="bottom-hint">Print-ready at actual size <span>·</span> 300 DPI</div></div>
+    </section>
+    <aside class="right-panel" id="propertiesPanel">
+      <div class="property-header"><div><span class="eyebrow">CUSTOMIZE</span><h2>Properties</h2></div><div class="property-actions"><button id="lockElement" class="icon-btn" title="Lock selected element" aria-label="Lock selected element">🔓</button><button id="deleteElement" class="icon-btn danger" title="Delete selected">⌫</button></div></div>
+      <div id="emptyProperties" class="empty-properties"><div class="select-illustration"><span>↖</span></div><h3>Select an element</h3><p>Choose an item on the card or add a new one to edit its properties.</p></div>
+      <div id="fontEditor" class="font-editor hidden">
+        <div class="font-section-label">FONT</div>
+        <div class="font-family-size"><select id="fontFamily" aria-label="Font family"><option value="DM Sans, sans-serif">DM Sans</option><option value="Manrope, sans-serif">Manrope</option><option value="Arial, sans-serif">Arial</option><option value="Helvetica, Arial, sans-serif">Helvetica</option><option value="Georgia, serif">Georgia</option><option value="'Times New Roman', serif">Times New Roman</option><option value="Verdana, sans-serif">Verdana</option><option value="Tahoma, sans-serif">Tahoma</option><option value="'Trebuchet MS', sans-serif">Trebuchet MS</option><option value="'Courier New', monospace">Courier New</option></select><label><input id="fontSize" type="number" min="6" max="120" value="18" aria-label="Font size"><span>px</span></label></div>
+        <div class="font-style-row"><div class="format-buttons"><button type="button" data-format="bold" title="Bold" aria-label="Bold"><b>B</b></button><button type="button" data-format="italic" title="Italic" aria-label="Italic"><i>I</i></button><button type="button" data-format="underline" title="Underline" aria-label="Underline"><u>U</u></button><button type="button" data-format="strike" title="Strikethrough" aria-label="Strikethrough"><s>S</s></button></div><label class="font-color-control" title="Text color"><span>A</span><input id="fontColor" type="color" value="#172224" aria-label="Text color"></label></div>
+        <div class="font-align-row" role="group" aria-label="Text alignment"><button type="button" data-align="left" title="Align left" aria-label="Align left">☰</button><button type="button" data-align="center" title="Align center" aria-label="Align center">≡</button><button type="button" data-align="right" title="Align right" aria-label="Align right">☷</button><button type="button" data-align="justify" title="Justify" aria-label="Justify">☰</button></div>
+      </div>
+      <div id="elementProperties" class="element-properties hidden"></div>
+      <div class="panel-bottom"><div class="tip-card"><span class="tip-spark">✦</span><div><b>Design tip</b><p>Keep important text at least 3 mm from the card edge.</p></div></div><button id="bulkBtn" class="bulk-shortcut"><span class="bulk-icon">▤</span><span><b>Bulk personalize</b><small>Print cards from a list</small></span><span class="arrow">→</span></button></div>
+    </aside>
+  </main>
+  <section id="bulkDrawer" class="bulk-drawer" aria-hidden="true">
+    <div class="drawer-scrim" id="closeBulkScrim"></div><div class="drawer-panel"><div class="drawer-header"><div><span class="eyebrow">READY FOR EVERYONE</span><h2>Bulk personalize</h2></div><button class="icon-btn" id="closeBulk">×</button></div>
+      <p class="drawer-intro">Add a list of people to create a unique card for each one. Use <code>{{Name}}</code>, <code>{{Role}}</code> in your design, or add a card number field.</p>
+      <div class="bulk-tabs"><button class="bulk-tab active" data-mode="paste">Paste data</button><button class="bulk-tab" data-mode="csv">Upload CSV</button></div>
+      <div class="data-entry" id="pastePane"><label class="field-label" for="bulkData">Spreadsheet data</label><textarea id="bulkData" spellcheck="false" placeholder="Name,Role,CardNo&#10;Ava Chen,Designer,001&#10;Noah Patel,Engineer,002&#10;Mia Jones,Manager,003"></textarea><div class="entry-foot"><span>First row should contain column names</span><button class="text-button" id="loadSample">Load sample</button></div></div>
+      <div id="csvPane" class="csv-pane hidden"><label class="upload-box" for="csvFile"><span class="upload-icon">↑</span><b>Choose a CSV file</b><small>or drag it here · .csv</small><input id="csvFile" type="file" accept=".csv,text/csv"></label></div>
+      <div class="copies-control"><label for="copiesPerPerson"><span class="field-label">Cards per person</span><small>Repeat each person's details with a new serial number</small></label><div class="copies-input"><button type="button" id="copiesDown" aria-label="Fewer cards">−</button><input id="copiesPerPerson" type="number" value="1" min="1" max="100"><button type="button" id="copiesUp" aria-label="More cards">＋</button></div><small class="copies-override">A <code>Copies</code> column in your data can set this per person.</small></div>
+      <div class="numbering-box"><div class="numbering-top"><span class="number-icon">#</span><div><b>Automatic numbering</b><small>Sequential card numbers for each print</small></div><label class="switch"><input type="checkbox" id="autoNumber" checked><span></span></label></div><div class="number-options" id="numberOptions"><label>Prefix<input id="numberPrefix" type="text" placeholder="e.g. ID-"></label><label>Start at<input id="numberStart" type="number" value="1" min="0"></label><label>Digits<input id="numberDigits" type="number" value="3" min="1" max="10"></label></div><div class="field-help">Use <code>{{CardNo}}</code> in text, QR, or select a Card no. element. QR generation needs an internet connection.</div></div>
+      <div class="bulk-summary"><div><span class="summary-count" id="recordCount">0</span><span id="queueLabel">cards queued</span></div><span id="dataStatus">Paste data to get started</span></div>
+      <button class="btn primary queue-btn" id="queuePrint">Preview &amp; print <span>→</span></button>
+    </div></div>
+  </section>
+  <section id="templateModal" class="template-modal" aria-hidden="true">
+    <div class="template-scrim" id="templateScrim"></div><div class="template-dialog" role="dialog" aria-modal="true" aria-labelledby="templateTitle">
+      <div class="template-dialog-head"><div><span class="eyebrow">REUSE YOUR DESIGN</span><h2 id="templateTitle">Save as template</h2></div><button class="icon-btn" id="closeTemplate" aria-label="Close">×</button></div>
+      <label class="template-name-field"><span>Template name</span><input id="templateName" type="text" maxlength="80" placeholder="e.g. Employee ID card"></label>
+      <div class="template-folder"><div class="folder-icon">▰</div><div class="folder-copy"><b id="templateFolderName">Choose a local folder</b><small id="templateFolderHint">Templates are saved as files on this computer.</small></div><button class="btn quiet" id="chooseTemplateFolder">Choose folder</button></div>
+      <div class="template-list-head"><span>Saved templates</span><button class="text-button" id="refreshTemplates">Refresh</button></div>
+      <div id="templateList" class="template-list"><div class="template-list-empty">Choose a folder to see saved templates.</div></div>
+      <div class="template-dialog-foot"><span id="templateStatus">Saved templates stay in the folder you choose.</span><button class="btn primary" id="confirmSaveTemplate">Save template</button></div>
+    </div>
+  </section>
+  <input type="file" id="imageFile" accept="image/*" hidden><input type="file" id="projectFile" accept=".json,application/json" hidden>
+  <div id="toast" class="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
