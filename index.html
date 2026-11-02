@@ -10,7 +10,8 @@
   <link rel="stylesheet" href="polish.css?v=1">
   <link rel="stylesheet" href="template-modal.css">
   <link rel="stylesheet" href="card-size.css">
-  <style>@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style>
+  <link rel="stylesheet" href="bulk-print.css">
+  <style>@media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.batch-preview-modal,.bulk-drawer{display:none!important;visibility:hidden!important}}</style>
   <style>.copies-control{display:grid;grid-template-columns:1fr auto;gap:8px 14px;align-items:center;padding:12px;border:1px solid #e6ede9;border-radius:9px;margin-top:15px;background:#fbfdfc}.copies-control>label{grid-column:1}.copies-control>label small,.copies-override{display:block;font-size:9px;color:#929d98;margin-top:4px}.copies-input{grid-column:2;grid-row:1;display:flex;align-items:center;border:1px solid #e3eae6;border-radius:7px;background:#fff;height:32px}.copies-input button{border:0;background:transparent;width:28px;height:30px;color:#187d75}.copies-input input{width:37px;text-align:center;border:0;outline:0;font-weight:700;font-size:11px;color:#354541;-moz-appearance:textfield}.copies-input input::-webkit-inner-spin-button,.copies-input input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}.copies-override{grid-column:1/-1;margin:0}.copies-override code{color:#187d75;background:#eff8f4;border-radius:4px;padding:2px 4px}</style>
   <style>.id-icon{font:700 11px Manrope,sans-serif;letter-spacing:-.6px;color:#617f9b}</style>
 </head>
@@ -49,7 +50,7 @@
         <div class="layer-head"><label class="field-label">Layers</label><span id="layerCount" class="muted">0</span></div>
         <div id="layers" class="layers"></div>
       </section>
-      <div class="left-footer"><span class="status-led"></span> Autosaved in this browser</div>
+      <div id="storageWarning" class="storage-warning" role="status"></div><div class="left-footer"><span class="status-led"></span> Autosaved in this browser <button id="exportLargeProject" class="text-button hidden" type="button">Export backup</button></div>
     </aside>
     <section class="workspace">
       <div class="workspace-top"><div><div class="crumb">DESIGNER <span>/</span> <b id="sideLabel">FRONT</b></div><h1>Card designer<span class="period">.</span></h1><p>Design both sides, then personalize every copy for print.</p></div><div class="zoom-control"><button id="zoomOut" aria-label="Zoom out">−</button><span id="zoomValue">100%</span><input id="zoomSlider" type="range" min="50" max="150" step="5" value="100" aria-label="Canvas zoom"><button id="zoomIn" aria-label="Zoom in">＋</button></div></div>
@@ -88,11 +89,13 @@
       <div class="data-entry" id="pastePane"><label class="field-label" for="bulkData">Spreadsheet data</label><textarea id="bulkData" spellcheck="false" placeholder="Name,Role,CardNo&#10;Ava Chen,Designer,001&#10;Noah Patel,Engineer,002&#10;Mia Jones,Manager,003"></textarea><div class="entry-foot"><span>First row should contain column names</span><button class="text-button" id="loadSample">Load sample</button></div></div>
       <div id="csvPane" class="csv-pane hidden"><label class="upload-box" for="csvFile"><span class="upload-icon">↑</span><b>Choose a CSV file</b><small>or drag it here · .csv</small><input id="csvFile" type="file" accept=".csv,text/csv"></label></div>
       <div class="copies-control"><label for="copiesPerPerson"><span class="field-label">Cards per person</span><small>Repeat each person's details with a new serial number</small></label><div class="copies-input"><button type="button" id="copiesDown" aria-label="Fewer cards">−</button><input id="copiesPerPerson" type="number" value="1" min="1" max="100"><button type="button" id="copiesUp" aria-label="More cards">＋</button></div><small class="copies-override">A <code>Copies</code> column in your data can set this per person.</small></div>
-      <div class="numbering-box"><div class="numbering-top"><span class="number-icon">#</span><div><b>Automatic numbering</b><small>Sequential card numbers for each print</small></div><label class="switch"><input type="checkbox" id="autoNumber" checked><span></span></label></div><div class="number-options" id="numberOptions"><label>Prefix<input id="numberPrefix" type="text" placeholder="e.g. ID-"></label><label>Start at<input id="numberStart" type="number" value="1" min="0"></label><label>Digits<input id="numberDigits" type="number" value="3" min="1" max="10"></label></div><div class="field-help">Use <code>{{CardNo}}</code> in text, QR, or select a Card no. element. QR generation needs an internet connection.</div></div>
+      <div class="numbering-box"><div class="numbering-top"><span class="number-icon">#</span><div><b>Automatic numbering</b><small>Sequential card numbers for each print</small></div><label class="switch"><input type="checkbox" id="autoNumber" checked><span></span></label></div><div class="number-options" id="numberOptions"><label>Prefix<input id="numberPrefix" type="text" placeholder="e.g. ID-"></label><label>Start at<input id="numberStart" type="number" value="1" min="0"></label><label>Digits<input id="numberDigits" type="number" value="3" min="1" max="10"></label></div><div class="field-help">Use <code>{{CardNo}}</code> in text, QR, or select a Card no. element. QR codes are generated locally and work offline.</div></div>
+      <section class="print-settings-box"><div class="print-settings-head"><b>Printer &amp; batch</b><button type="button" class="text-button" id="printCalibration">Print alignment test</button></div><label>Printer profile<input id="printerProfile" type="text" placeholder="Heidi CP55-D"></label><div class="print-settings-grid"><label>Duplex<select id="duplexMode"><option value="off">Off / one side</option><option value="long">Two sides · flip long edge</option><option value="short">Two sides · flip short edge</option></select></label><label>Print batch<select id="printBatchSize"><option value="10">10 cards · large designs</option><option value="25">25 cards</option><option value="50" selected>50 cards</option><option value="100">100 cards</option><option value="250">250 cards</option></select></label></div><div class="print-settings-grid"><label>Quality guidance<select id="printQuality"><option value="standard">Standard</option><option value="high">High / best available</option></select></label><label>Output scale<strong class="scale-note">100% · actual card size</strong></label></div><small>These are saved reminders. Select the matching printer, duplex, and quality options in the driver dialog.</small></section>
       <div class="bulk-summary"><div><span class="summary-count" id="recordCount">0</span><span id="queueLabel">cards queued</span></div><span id="dataStatus">Paste data to get started</span></div>
-      <button class="btn primary queue-btn" id="queuePrint">Preview &amp; print <span>→</span></button>
+      <button class="btn primary queue-btn" id="queuePrint">Preview batch <span>→</span></button>
     </div></div>
   </section>
+  <section id="batchPreviewModal" class="batch-preview-modal" aria-hidden="true"><div class="batch-preview-scrim" id="closeBatchPreview"></div><div class="batch-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="batchPreviewTitle"><header><div><span class="eyebrow">CHECK BEFORE PRINTING</span><h2 id="batchPreviewTitle">Batch preview</h2><p id="batchPreviewInfo"></p></div><button class="icon-btn" id="closeBatchPreviewButton" aria-label="Close preview">×</button></header><div id="batchPreviewContent" class="batch-preview-content"></div><div class="batch-preview-foot"><span id="batchProgressLabel"></span><button type="button" class="btn primary" id="printNextBatch">Print next batch →</button></div></div></section>
   <section id="templateModal" class="template-modal" aria-hidden="true">
     <div class="template-scrim" id="templateScrim"></div><div class="template-dialog" role="dialog" aria-modal="true" aria-labelledby="templateTitle">
       <div class="template-dialog-head"><div><span class="eyebrow">REUSE YOUR DESIGN</span><h2 id="templateTitle">Save as template</h2></div><button class="icon-btn" id="closeTemplate" aria-label="Close">×</button></div>
@@ -105,7 +108,7 @@
   </section>
   <input type="file" id="imageFile" accept="image/*" hidden><input type="file" id="projectFile" accept=".json,application/json" hidden>
   <div id="toast" class="toast"></div>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+  <script src="qrcode.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
