@@ -137,3 +137,56 @@ html[data-theme="dark"] .number-options input:disabled{background:#29332d;color:
 .arrange-measures .measure-field input[type="number"]::-webkit-inner-spin-button,.arrange-measures .measure-field input[type="number"]::-webkit-outer-spin-button{width:15px;height:24px;margin:0;opacity:1}
 .arrange-measures .measure-field em{font-size:10px}
 html[data-theme="dark"] .arrange-measures .measure-field>span{color:#b2beb5}
+.workspace-top{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;column-gap:14px;row-gap:15px;padding-bottom:12px}
+.workspace-heading{grid-column:1/-1;min-width:0}
+.workspace-heading h1{margin-top:8px}
+.workspace-insert-toolbar{grid-column:1;grid-row:2;min-width:0;display:flex;align-items:center;gap:6px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#cfdbd5 transparent;padding:2px 1px 5px}
+.insert-label{flex:0 0 auto;margin-right:2px;color:#9aa6a1;font-size:9px;font-weight:750;letter-spacing:.8px}
+.workspace-insert-toolbar .tool{flex:0 0 47px;width:47px;height:45px;gap:2px;border-color:#e5ece8;border-radius:8px;background:linear-gradient(180deg,#fff,#f8faf8);font-size:9px}
+.workspace-insert-toolbar .tool-icon{height:21px;font-size:17px}
+.workspace-insert-toolbar .text-icon{font-size:19px}
+.workspace-insert-toolbar .qr-icon{font-size:19px}
+.workspace-insert-toolbar .num-icon{font-size:16px}
+.workspace-insert-toolbar .id-icon{font-size:10px}
+.workspace-insert-toolbar .tool:hover{transform:translateY(-1px);box-shadow:0 3px 9px #244b3b12}
+.workspace-top>.zoom-control{grid-column:2;grid-row:2;align-self:center;white-space:nowrap;box-shadow:0 1px 3px #244b3b08}
+html[data-theme="dark"] .workspace-insert-toolbar .tool{background:linear-gradient(180deg,#303b35,#27322c);border-color:#53645a;color:#e0e9e2}
+html[data-theme="dark"] .workspace-insert-toolbar .tool:hover{background:linear-gradient(180deg,#39483f,#2e3b33);border-color:#7da993}
+html[data-theme="dark"] .insert-label{color:#a5b2a9}
+@media(max-width:1100px){.workspace-top{column-gap:8px}.workspace-insert-toolbar{gap:4px}.workspace-insert-toolbar .tool{flex-basis:42px;width:42px}.insert-label{font-size:8px}.workspace-top>.zoom-control{gap:6px;padding:0 5px}}
+@media(max-width:760px){.workspace-top{grid-template-columns:minmax(0,1fr);row-gap:8px}.workspace-heading,.workspace-insert-toolbar,.workspace-top>.zoom-control{grid-column:1;grid-row:auto}.workspace-top>.zoom-control{justify-self:end}.workspace-insert-toolbar{grid-row:2}.workspace-top>.zoom-control{grid-row:3}}
+.arrange-bar{height:49px;min-height:49px;flex-direction:row;align-items:center;justify-content:flex-start;gap:8px;padding:5px 9px;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;scrollbar-color:#cfdbd5 transparent}
+.arrange-row{height:35px;min-height:35px;gap:8px;flex:0 0 auto}
+.arrange-actions{border-bottom:0;padding:0}
+.arrange-measures{padding:0}
+.arrange-row-title{width:82px;flex-basis:82px;padding-right:7px;border-right:1px solid #e6ece9;font-size:8px;letter-spacing:.45px}
+.arrange-bar .arrange-divider{height:25px;margin:0 1px}
+.arrange-bar .measure-field{gap:4px}
+.arrange-bar .measure-field>span{font-size:10px}
+.arrange-bar .measure-field input[type="number"]{width:48px;height:26px}
+.arrange-bar .measure-field em{font-size:9px}
+html[data-theme="dark"] .arrange-row-title{border-color:#3a4940}
+html[data-theme="dark"] .arrange-bar .arrange-divider{background:#3a4940}
+@media(max-width:1100px){.arrange-bar{margin-left:-4px;margin-right:-4px;gap:7px;padding-right:7px;padding-left:7px}.arrange-row{gap:6px}.arrange-row-title{width:72px;flex-basis:72px}.arrange-bar .measure-field{gap:3px}.arrange-bar .measure-field input[type="number"]{width:43px}}
+.workspace-heading{grid-column:1;grid-row:1}
+.workspace-face-control{grid-column:2;grid-row:1;align-self:center;justify-self:end;min-width:158px}
+.face-control-label{display:block;margin:0 0 4px 3px;color:#8c9993;font-size:8px;font-weight:750;letter-spacing:.7px}
+.workspace-face-control .face-switch{width:158px;margin:0;padding:2px;border:1px solid #dbe5df;background:linear-gradient(180deg,#f2f6f3,#e9efeb);border-radius:9px}
+.workspace-face-control .face-tab{height:28px;gap:5px;font-size:10px}
+.workspace-face-control .face-tab.active{border:1px solid #c8ddd2;box-shadow:0 1px 3px #244b3b12}
+html[data-theme="dark"] .face-control-label{color:#a5b2a9}
+html[data-theme="dark"] .workspace-face-control .face-switch{border-color:#46564c;background:linear-gradient(180deg,#1b241f,#202923)}
+html[data-theme="dark"] .workspace-face-control .face-tab.active{border-color:#689783}
+@media(max-width:760px){.workspace-heading{grid-column:1;grid-row:1}.workspace-face-control{grid-column:1;grid-row:2;justify-self:start}.workspace-insert-toolbar{grid-column:1;grid-row:3}.workspace-top>.zoom-control{grid-column:1;grid-row:4}}
+.workspace-header-switches{grid-column:2;grid-row:1;align-self:center;justify-self:end;display:flex;align-items:flex-end;gap:10px}
+.workspace-header-switches .workspace-face-control,.workspace-header-switches .workspace-orientation-control{min-width:148px}
+.workspace-header-switches .workspace-face-control{grid-column:auto;grid-row:auto;justify-self:auto}
+.workspace-header-switches .workspace-face-control .face-switch{width:148px}
+.workspace-orientation-control .orientation-switch{width:148px;margin:0;padding:2px;border:1px solid #dbe5df;background:linear-gradient(180deg,#f2f6f3,#e9efeb);border-radius:9px}
+.workspace-orientation-control .orientation-switch button{height:28px;font-size:10px}
+.workspace-orientation-control .orientation-switch button.active{border:1px solid #c8ddd2;color:#176f67;box-shadow:0 1px 3px #244b3b12}
+html[data-theme="dark"] .workspace-orientation-control .orientation-switch{border-color:#46564c;background:linear-gradient(180deg,#1b241f,#202923)}
+html[data-theme="dark"] .workspace-orientation-control .orientation-switch button{color:#aab8ae}
+html[data-theme="dark"] .workspace-orientation-control .orientation-switch button.active{background:linear-gradient(180deg,#355247,#2c4338);border-color:#689783;color:#b7e2d1}
+@media(max-width:1100px){.workspace-header-switches{gap:6px}.workspace-header-switches .workspace-face-control,.workspace-header-switches .workspace-orientation-control,.workspace-header-switches .workspace-face-control .face-switch,.workspace-orientation-control .orientation-switch{min-width:0;width:130px}}
+@media(max-width:760px){.workspace-header-switches{grid-column:1;grid-row:2;justify-self:start}.workspace-insert-toolbar{grid-column:1;grid-row:3}.workspace-top>.zoom-control{grid-column:1;grid-row:4}}
