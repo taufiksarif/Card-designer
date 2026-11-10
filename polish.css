@@ -131,6 +131,7 @@ html[data-theme="dark"] .property-actions .icon-btn.danger:hover{background:#4a3
 html[data-theme="dark"] .bulk-shortcut{color:#e0e9e2}
 html[data-theme="dark"] .template-dialog-foot>span,html[data-theme="dark"] .template-folder .folder-copy small,html[data-theme="dark"] .batch-preview-foot>span{color:#a8b4ab}
 html[data-theme="dark"] .number-options input:disabled{background:#29332d;color:#78877d}
+.excel-template-action{display:flex;justify-content:flex-end;margin-top:8px}
 .shape-gallery{position:fixed;z-index:30;left:0;top:0}
 .arrange-measures .measure-field>span{font-size:11px;font-weight:650;color:#64756d}
 .arrange-measures .measure-field input[type="number"]{box-sizing:border-box;width:54px;height:28px;padding:0 3px 0 5px;font-size:11px;line-height:1.2;appearance:auto;-moz-appearance:number-input}
