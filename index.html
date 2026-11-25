@@ -27,7 +27,7 @@
       <section class="setup-section">
         <label class="field-label">Card size</label>
         <label class="preset-label">Preset size<select id="cardSizePreset"><option value="custom">Custom dimensions</option><option value="cr80">CR80 / ID-1 · 85.6 × 54 mm</option><option value="cr79">CR79 · 83.9 × 51 mm</option><option value="cr100">CR100 · 98.5 × 67 mm</option><option value="id2">ISO ID-2 · 105 × 74 mm</option><option value="id3">ISO ID-3 · 125 × 88 mm</option></select></label>
-        <div class="size-fields"><label><span>Width</span><div><input id="cardWidth" type="number" value="85.6" step="0.1"><em>mm</em></div></label><label><span>Height</span><div><input id="cardHeight" type="number" value="54" step="0.1"><em>mm</em></div></label></div>
+        <div class="size-fields"><label><span>Width</span><div><input id="cardWidth" type="number" value="85.6" step="0.1" min="25" max="300"><em>mm</em></div></label><label><span>Height</span><div><input id="cardHeight" type="number" value="54" step="0.1" min="25" max="300"><em>mm</em></div></label></div>
         <div class="size-note"><span class="check">✓</span> <span id="presetNote">CR80 · Standard ID card</span></div>
         <label class="background-fit-row">Background image<select id="backgroundFit"><option value="cover">Fill card · crop edges</option><option value="contain">Fit image · show all</option></select><small>Image proportions stay intact; the original resolution is kept for printing.</small></label>
       </section>
