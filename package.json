@@ -1,0 +1,44 @@
+{
+  "name": "card-studio",
+  "productName": "Card Studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Design ID cards and bulk-print them from a spreadsheet.",
+  "author": "Card Studio",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "com.cardstudio.desktop",
+    "productName": "Card Studio",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "electron/**",
+      "index.html",
+      "app.js",
+      "qrcode.js",
+      "*.css",
+      "fonts/**",
+      "package.json"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        "portable",
+        "zip"
+      ],
+      "artifactName": "CardStudio-${version}-win-${arch}.${ext}"
+    },
+    "portable": {
+      "artifactName": "CardStudio-Portable-${version}.exe"
+    }
+  },
+  "devDependencies": {
+    "electron": "^45.5.0",
+    "electron-builder": "^26.18.0"
+  }
+}

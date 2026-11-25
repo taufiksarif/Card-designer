@@ -2,7 +2,29 @@
 
 Card Studio is a local, browser-based card layout and bulk printing tool. Create both sides of a card, personalize each print from pasted spreadsheet data or a CSV file, then print through the printer driver installed on your computer. The app does not need Python or an account.
 
-## Start the app
+## Portable Windows app (no install, no administrator)
+
+Card Studio is also available as a portable Windows app. Nothing is installed and administrator rights are not needed.
+
+- **Single file:** copy `CardStudio-Portable-<version>.exe` anywhere you can write to (Desktop, Documents, a USB stick) and double-click it. It starts a few seconds more slowly because it unpacks itself each time.
+- **Folder version (faster start):** extract `CardStudio-<version>-win-x64.zip` to a folder and run `Card Studio.exe` inside it.
+
+Your designs, settings and template folder choice are saved in a `Card Studio Data` folder next to the app, so they move with it. If that folder can't be written to, the app saves to `%APPDATA%\Card Studio` instead. Designs saved in a web browser don't carry over automatically: use **Save project** in the browser, then **Open** in the app.
+
+The app isn't code-signed, so the first time you run it, Windows SmartScreen may show "Windows protected your PC". Choose **More info → Run anyway**.
+
+### Building the Windows app
+
+You need [Node.js](https://nodejs.org) on the computer that builds the app, but not on the computers that run it.
+
+```
+npm install
+npm run dist
+```
+
+Both files are written to the `dist` folder. To try the app without packaging it, run `npm start`.
+
+## Start the web version
 
 Keep all project files together in the same folder.
 
