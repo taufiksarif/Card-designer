@@ -19,7 +19,7 @@
   <header class="topbar">
     <a class="brand" href="#"><span class="brand-mark">C</span><span>card<span class="brand-light">studio</span><small>DESIGN · PERSONALIZE · PRINT</small></span></a>
     <div class="doc-name"><span class="live-dot"></span><input id="projectName" value="Untitled card" aria-label="Project name"><span class="saved">Saved locally</span></div>
-    <div class="top-actions"><button class="btn quiet history-button" id="undoAction" type="button" title="Undo (⌘/Ctrl+Z)" aria-label="Undo" disabled>↶</button><button class="btn quiet history-button" id="redoAction" type="button" title="Redo (⌘/Ctrl+Shift+Z)" aria-label="Redo" disabled>↷</button><button class="btn quiet theme-toggle" id="themeToggle" type="button" aria-pressed="false">◐ Dark</button><button class="btn quiet" id="openProject">Open</button><button class="btn quiet" id="saveProject">Save project</button><button class="btn quiet" id="saveTemplate">Save as template</button><button class="btn primary" id="printBtn"><span>▣</span> Print cards</button></div>
+    <div class="top-actions"><button class="btn quiet history-button" id="undoAction" type="button" title="Undo (⌘/Ctrl+Z)" aria-label="Undo" disabled>↶</button><button class="btn quiet history-button" id="redoAction" type="button" title="Redo (⌘/Ctrl+Shift+Z)" aria-label="Redo" disabled>↷</button><button class="btn quiet theme-toggle" id="themeToggle" type="button" aria-pressed="false">◐ Dark</button><button class="btn quiet" id="aboutButton" type="button" aria-haspopup="dialog">About</button><button class="btn quiet" id="openProject">Open</button><button class="btn quiet" id="saveProject">Save project</button><button class="btn quiet" id="saveTemplate">Save as template</button><button class="btn primary" id="printBtn"><span>▣</span> Print cards</button></div>
   </header>
   <main class="app-shell">
     <aside class="left-panel">
@@ -60,7 +60,7 @@
       <div id="emptyProperties" class="empty-properties"><div class="select-illustration"><span>↖</span></div><h3>Select an element</h3><p>Choose an item on the card or add a new one to edit its properties.</p></div>
       <div id="fontEditor" class="font-editor hidden">
         <div class="font-section-label">FONT</div>
-        <div class="font-family-size"><select id="fontFamily" aria-label="Font family"><option value="DM Sans, sans-serif">DM Sans</option><option value="Manrope, sans-serif">Manrope</option><option value="Arial, sans-serif">Arial</option><option value="Helvetica, Arial, sans-serif">Helvetica</option><option value="Georgia, serif">Georgia</option><option value="'Times New Roman', serif">Times New Roman</option><option value="Verdana, sans-serif">Verdana</option><option value="Tahoma, sans-serif">Tahoma</option><option value="'Trebuchet MS', sans-serif">Trebuchet MS</option><option value="'Courier New', monospace">Courier New</option></select><label><input id="fontSize" type="number" min="6" max="120" value="18" aria-label="Font size"><span>px</span></label></div>
+        <div class="font-family-size"><select id="fontFamily" aria-label="Font family"><option value="DM Sans, sans-serif">DM Sans</option><option value="Manrope, sans-serif">Manrope</option><option value="Arial, sans-serif">Arial</option><option value="Helvetica, Arial, sans-serif">Helvetica</option><option value="Georgia, serif">Georgia</option><option value="'Times New Roman', serif">Times New Roman</option><option value="Verdana, sans-serif">Verdana</option><option value="Tahoma, sans-serif">Tahoma</option><option value="'Trebuchet MS', sans-serif">Trebuchet MS</option><option value="'Courier New', monospace">Courier New</option></select><label><input id="fontSize" type="number" min="6" max="120" step="any" value="18" aria-label="Font size"><span>px</span></label></div>
         <div class="font-style-row"><div class="format-buttons"><button type="button" data-format="bold" title="Bold" aria-label="Bold"><b>B</b></button><button type="button" data-format="italic" title="Italic" aria-label="Italic"><i>I</i></button><button type="button" data-format="underline" title="Underline" aria-label="Underline"><u>U</u></button><button type="button" data-format="strike" title="Strikethrough" aria-label="Strikethrough"><s>S</s></button></div><label class="font-color-control" title="Text color"><span>A</span><input id="fontColor" type="color" value="#172224" aria-label="Text color"></label></div>
         <div class="font-align-row" role="group" aria-label="Text alignment"><button type="button" data-align="left" title="Align left" aria-label="Align left">☰</button><button type="button" data-align="center" title="Align center" aria-label="Align center">≡</button><button type="button" data-align="right" title="Align right" aria-label="Align right">☷</button><button type="button" data-align="justify" title="Justify" aria-label="Justify">☰</button></div>
       </div>
@@ -91,6 +91,14 @@
       <div class="template-list-head"><span>Saved templates</span><button class="text-button" id="refreshTemplates">Refresh</button></div>
       <div id="templateList" class="template-list"><div class="template-list-empty">Choose a folder to see saved templates.</div></div>
       <div class="template-dialog-foot"><span id="templateStatus">Saved templates stay in the folder you choose.</span><button class="btn primary" id="confirmSaveTemplate">Save template</button></div>
+    </div>
+  </section>
+  <section id="aboutModal" class="template-modal" aria-hidden="true">
+    <div class="template-scrim" id="aboutScrim"></div><div class="template-dialog about-dialog" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+      <div class="template-dialog-head"><div><span class="eyebrow">CARD DESIGNER</span><h2 id="aboutTitle">About</h2></div><button class="icon-btn" id="closeAbout" type="button" aria-label="Close">×</button></div>
+      <p class="about-text">Welcome to Card Designer, the idea came from Taufik, code executed by AI agents.</p>
+      <p class="about-text">This app is open source, you can contribute to improve this app by visiting this <a href="https://github.com/taufiksarif/Card-designer" target="_blank" rel="noopener noreferrer">GitHub</a> page.</p>
+      <div class="template-dialog-foot"><span></span><button class="btn primary" id="aboutOk" type="button">Close</button></div>
     </div>
   </section>
   <input type="file" id="imageFile" accept="image/*" hidden><input type="file" id="projectFile" accept=".json,application/json" hidden>
