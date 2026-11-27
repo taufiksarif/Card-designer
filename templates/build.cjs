@@ -5,7 +5,7 @@ const png = (f) => `url("data:image/png;base64,${fs.readFileSync(root + 'templat
 const text = (id, name, value, x, y, w, h, size, extra = {}) => ({ id, type: 'text', name, text: value, x, y, w, h, size, bold: false, weight: 400, color: '#000000', font: 'DM Sans, sans-serif', align: 'left', angle: 0, opacity: 1, radius: 0, fill: '#dff0e9', fit: 'cover', ...extra });
 const templates = [{
   name: 'Jumper Tag',
-  description: 'Front with a purple-to-orange side bar, contact text and serial number; back with the jumper safety rules and illustration. All text can be edited, moved and resized.',
+  description: 'Front with a purple-to-orange side bar, title, contact text and serial number; back with the jumper safety rules and illustration. All text can be edited, moved and resized.',
   design: {
     name: 'Jumper Tag', width: 85.6, height: 54,
     background: { front: png('jumper-tag-front.png'), back: png('jumper-tag-back.png') },
@@ -13,6 +13,7 @@ const templates = [{
     backgroundFit: { front: 'cover', back: 'cover' },
     elements: {
       front: [
+        text('cardtitle', 'Jumper Tag title', 'Jumper Tag', 54.52, 39.66, 165, 34, 27.77, { bold: undefined, weight: 500 }),
         text('footer', 'Contact text', 'Jumper can only be placed/removed by this card holder.\nIf found please contact : 800-8497736', 54.52, 289.57, 285, 26, 10.29),
         text('seriallabel', 'Serial Number label', 'Serial Number:', 350.78, 301.92, 72, 18, 10.29),
         { id: 'serialno', type: 'number', name: 'Serial number', text: 'JTH001', x: 424, y: 302, w: 80, h: 18, size: 10.3, bold: true, weight: 700, color: '#000000', font: 'DM Sans, sans-serif', align: 'left', angle: 0, opacity: 1, radius: 0, fill: '#dff0e9', fit: 'cover' },

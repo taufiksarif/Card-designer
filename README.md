@@ -99,7 +99,7 @@ To replace a placed image while keeping its size and position, select the image 
 
 ## Save and reuse templates
 
-Choose **Save as template**, enter a template name, then choose a folder when the app asks. The template includes card dimensions, backgrounds, and both sides of the layout. Load templates later from the same folder in the template window. The template window also lists **built-in templates**, such as **Jumper Tag** (a CR80 jumper tag with a purple-to-orange side bar, a serial number on the front and the jumper safety rules on the back). Their 1011 × 638 px background pictures are in `templates/`; after changing them, run `node templates/build.cjs` to update `templates.js`. If direct folder access is unavailable, the app downloads a `.cardtemplate.json` file that you can keep and open on another computer.
+Choose **Save as template**, enter a template name, then choose a folder when the app asks. The template includes card dimensions, backgrounds, and both sides of the layout. Load templates later from the same folder in the template window. The template window also lists **built-in templates**, such as **Jumper Tag** (a CR80 jumper tag with a purple-to-orange side bar, a title, contact text and a serial number on the front and the jumper safety rules on the back). Their 1011 × 638 px background pictures are in `templates/`; after changing them, run `node templates/build.cjs` to update `templates.js`. If direct folder access is unavailable, the app downloads a `.cardtemplate.json` file that you can keep and open on another computer.
 
 ## Print cards
 
