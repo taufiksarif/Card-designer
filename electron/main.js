@@ -1,8 +1,14 @@
 // Card Studio — portable Windows desktop shell.
 // Loads the same index.html as the web version. No install and no administrator rights are needed.
-const { app, BrowserWindow, Menu, shell } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, shell } = require('electron');
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
+const { execFile } = require('child_process');
+
+// CardPrint.exe prints the finished card pictures through standard Windows printing (see CardPrint.cs).
+// It sits outside the app archive so Windows can run it.
+const PRINT_HELPER = app.isPackaged ? path.join(process.resourcesPath, 'CardPrint.exe') : path.join(__dirname, 'bin', 'CardPrint.exe');
 
 const APP_ROOT = path.join(__dirname, '..');
 const INDEX_FILE = path.join(APP_ROOT, 'index.html');
@@ -54,6 +60,7 @@ if (!app.requestSingleInstanceLock()) {
         nodeIntegration: false,
         sandbox: true,
         spellcheck: false,
+        preload: path.join(__dirname, 'preload.js'),
       },
     });
 
@@ -85,6 +92,41 @@ if (!app.requestSingleInstanceLock()) {
     });
     mainWindow.loadFile(INDEX_FILE);
   }
+
+  // Print card pictures (one PNG per page, in order: front, back, front, back …) with CardPrint.exe.
+  // It shows the Windows print dialog, where the printer's Preferences set two-sided printing and ribbon options.
+  // Resolves to { success, reason, printer }; reason is 'cancelled' when the dialog is closed.
+  ipcMain.handle('card-studio:print-pages', async (event, request) => {
+    if (!mainWindow || event.sender !== mainWindow.webContents) return { success: false, reason: 'Not allowed' };
+    const pages = Array.isArray(request?.pages) ? request.pages : [];
+    if (!pages.length || pages.length > 1200 || !pages.every((page) => page instanceof Uint8Array && page.length > 0)) {
+      return { success: false, reason: 'Nothing to print' };
+    }
+    if (process.platform !== 'win32' || !fs.existsSync(PRINT_HELPER)) {
+      return { success: false, reason: 'The print helper (CardPrint.exe) is missing from this copy of Card Studio' };
+    }
+    const folder = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'card-studio-print-'));
+    try {
+      const files = [];
+      for (let i = 0; i < pages.length; i++) {
+        const file = path.join(folder, `page-${String(i + 1).padStart(4, '0')}.png`);
+        await fs.promises.writeFile(file, pages[i]);
+        files.push(file);
+      }
+      const title = String(request.title || 'Card Studio').replace(/[\r\n]/g, ' ').slice(0, 120);
+      const intent = request.intent === 'saturation' ? 'saturation' : 'keep';
+      return await new Promise((resolve) => {
+        execFile(PRINT_HELPER, ['--title', title, '--intent', intent, ...files], { windowsHide: false, timeout: 0 }, (error, stdout, stderr) => {
+          const code = error ? (typeof error.code === 'number' ? error.code : 1) : 0;
+          if (code === 0) resolve({ success: true, reason: '', printer: String(stdout).trim() });
+          else if (code === 2) resolve({ success: false, reason: 'cancelled' });
+          else resolve({ success: false, reason: String(stderr).trim() || String(error?.message || 'Printing failed') });
+        });
+      });
+    } finally {
+      fs.promises.rm(folder, { recursive: true, force: true }).catch(() => {});
+    }
+  });
 
   Menu.setApplicationMenu(null);
   app.whenReady().then(createWindow);

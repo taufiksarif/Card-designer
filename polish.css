@@ -232,3 +232,4 @@ body{height:100vh}
 .panel-bottom{flex:0 0 auto}
 html[data-theme="dark"] .property-scroll{scrollbar-color:#52675a transparent}
 @media(max-width:760px){.canvas-tip{flex-wrap:wrap;justify-content:center;text-align:center}.workspace-header-switches{flex-wrap:wrap}.history-button{width:30px}}
+.workspace-insert-toolbar{gap:3px}.workspace-insert-toolbar .tool{flex-basis:40px;width:40px}

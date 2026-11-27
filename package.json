@@ -3,12 +3,13 @@
   "productName": "Card Studio",
   "version": "1.0.0",
   "private": true,
-  "description": "Design ID cards and bulk-print them from a spreadsheet.",
+  "description": "Design ID cards and print them one at a time or as a numbered run.",
   "author": "Card Studio",
   "main": "electron/main.js",
   "scripts": {
-    "start": "electron .",
-    "dist": "electron-builder --win --x64"
+    "build:helper": "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe -nologo -target:winexe -optimize+ -out:electron\\bin\\CardPrint.exe -r:System.Drawing.dll -r:System.Windows.Forms.dll electron\\CardPrint.cs",
+    "start": "npm run build:helper && electron .",
+    "dist": "npm run build:helper && electron-builder --win --x64"
   },
   "build": {
     "appId": "com.cardstudio.desktop",
@@ -18,12 +19,21 @@
     },
     "files": [
       "electron/**",
+      "!electron/bin/**",
+      "!electron/*.cs",
       "index.html",
       "app.js",
       "qrcode.js",
+      "templates.js",
       "*.css",
       "fonts/**",
       "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "electron/bin/CardPrint.exe",
+        "to": "CardPrint.exe"
+      }
     ],
     "asar": true,
     "win": {
